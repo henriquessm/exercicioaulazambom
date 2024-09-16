@@ -63,4 +63,4 @@ jobs:
         script: |
           docker stop jogador
           docker rm --force jogador
-          docker run -d -p 8080:8080 --network=rede2 --name jogador henriquessm/jogador:${{ github.sha }}
+          docker run -d -p 8080:8080 --network=rede --name jogador henriquessm/jogador:${{ github.sha }}
