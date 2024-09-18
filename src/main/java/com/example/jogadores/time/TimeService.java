@@ -11,7 +11,7 @@ public class TimeService {
     public ResponseEntity<RetornarTImeDTO> getTime(String idTime) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(
-                "http://localhost:8080/tjime/" + idTime,
+                "http://localhost:8082/tjime/" + idTime,
                 RetornarTImeDTO.class);
     }
 }
