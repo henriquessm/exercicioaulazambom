@@ -34,7 +34,7 @@ public class JogadorService {
     }
 
 
-    public Jogador addTime(Jogador jogador, String id){
+    public Jogador addTime(Jogador jogador, Integer id){
         //TODO: Checagens2
         Optional<Jogador> op = jogadorRepository.findById(jogador.getId());
         if (op.isEmpty()) {

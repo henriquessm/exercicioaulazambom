@@ -27,7 +27,7 @@ public class JogadorController {
     }
 
     @PostMapping("/{idTime}")
-    public Jogador salvarComTime(@RequestBody Jogador aposta, @PathVariable String idTime) {
+    public Jogador salvarComTime(@RequestBody Jogador aposta, @PathVariable Integer idTime) {
         return jogadorService.addTime(aposta, idTime);
     }
 }
