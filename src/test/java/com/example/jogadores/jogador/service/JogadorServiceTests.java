@@ -97,7 +97,7 @@ public class JogadorServiceTests {
 
 
         Assertions.assertThrows(RuntimeException.class, () -> {
-            jogadorService.addTime(aposta, "1");
+            jogadorService.addTime(aposta, 1);
         });
     }
     @Test
@@ -114,11 +114,11 @@ public class JogadorServiceTests {
         RetornarTImeDTO retornarPartidaDTO = new RetornarTImeDTO();
         ResponseEntity<RetornarTImeDTO> partidaDto = new ResponseEntity<>(retornarPartidaDTO, HttpStatus.NOT_FOUND);
 
-        Mockito.when(timeService.getTime("1")).thenReturn(partidaDto);
+        Mockito.when(timeService.getTime(1)).thenReturn(partidaDto);
         Mockito.when(jogadorRepository.findById("1")).thenReturn(Optional.of(jogador));
 
         Assertions.assertThrows(TimeNaoEncontrandoException.class, () -> {
-            jogadorService.addTime(jogador,"1");
+            jogadorService.addTime(jogador,1);
 
         });
     }
