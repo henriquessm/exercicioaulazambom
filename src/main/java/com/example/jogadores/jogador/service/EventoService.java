@@ -67,7 +67,7 @@ public class EventoService {
             RetornarUserDTO timeDTO = time.getBody();
             Integer max = eventoA.getConvidados();
             if(max == 0){
-                throw new RuntimeException("Número máximo de convidados atingidos");
+                throw new RuntimeException("Número máximo de convidados atingido");
 
             }
             eventoA.setConvidados(eventoA.getConvidados()-1);
