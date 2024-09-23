@@ -1,17 +1,11 @@
 package com.example.jogadores.jogador.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-
-
 
 @Document
-public class Jogador {
+public class Evento {
 
     @Id
     private String id;
@@ -52,14 +46,14 @@ public class Jogador {
         this.cpf = cpf;
     }
 
-    public Jogador(String id, String nome, Integer convidados, String cpf) {
+    public Evento(String id, String nome, Integer convidados, String cpf) {
         this.id = id;
         this.nome = nome;
         this.convidados = convidados;
         this.cpf = cpf;
     }
 
-    public Jogador(){
+    public Evento(){
     }
 
 }

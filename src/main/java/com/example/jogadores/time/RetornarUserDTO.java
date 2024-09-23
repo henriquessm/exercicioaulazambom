@@ -1,11 +1,7 @@
 package com.example.jogadores.time;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
-
-public class RetornarTImeDTO {
+public class RetornarUserDTO {
 
     private String cpf;
     private String nome;
