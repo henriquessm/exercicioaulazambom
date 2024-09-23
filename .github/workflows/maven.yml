@@ -51,7 +51,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: henriquessm/jogador:${{ github.sha }}
+        tags: henriquessm/prova:${{ github.sha }}
 
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
@@ -61,6 +61,6 @@ jobs:
         key: ${{ secrets.KEY_TEST }}
         port: 22
         script: |
-          docker stop jogador
-          docker rm --force jogador
-          docker run -d -p 8080:8080 --network=rede --name jogador henriquessm/jogador:${{ github.sha }}
+          docker stop prova
+          docker rm --force prova
+          docker run -d -p 8080:8080 --network=rede --name prova henriquessm/prova:${{ github.sha }}
