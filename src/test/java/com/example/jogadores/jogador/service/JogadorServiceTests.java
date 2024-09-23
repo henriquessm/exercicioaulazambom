@@ -38,38 +38,13 @@ public class JogadorServiceTests {
 
 
     @Test
-    public void TestCadastrarJogador(){
-
-        Jogador jogador = new Jogador();
-        jogador.setNome("Matheus Pereira");
-        jogador.setIdade(26);
-
-        ArrayList<String> lista = new ArrayList<>();
-        lista.add("CRU");
-        jogador.setTimes(lista);
-
-        Mockito.when(jogadorRepository.save(Mockito.any(Jogador.class))).thenReturn(jogador);
-
-        Jogador retorno = jogadorService.salvar(jogador);
-
-            // Verify the results
-        Assertions.assertNotNull(retorno);
-        Assertions.assertEquals(26, retorno.getIdade());
-        Assertions.assertEquals("Matheus Pereira", retorno.getNome());
-        Assertions.assertEquals(lista, retorno.getTimes());
-
-    }
-    @Test
     public void testListarJogadores() {
 
         // preparo
         Jogador jogador = new Jogador();
-        jogador.setNome("Matheus Pereira");
-        jogador.setIdade(26);
-
-        ArrayList<String> lista = new ArrayList<>();
-        lista.add("CRU");
-        jogador.setTimes(lista);
+        jogador.setNome("Festa");
+        jogador.setConvidados(10);
+        jogador.setCpf("123");
 
         List<Jogador> partidas = new ArrayList<>();
         partidas.add(jogador);
@@ -77,16 +52,14 @@ public class JogadorServiceTests {
         Mockito.when(jogadorRepository.findAll()).thenReturn(partidas);
 
         // chamada do codigo testado
-        List<Jogador> resultado = jogadorService.listar();
+        List<Jogador> resultado = jogadorService.listar("Festa");
 
         // verificacao dos resultados
         Assertions.assertNotNull(resultado);
         Assertions.assertEquals(1, resultado.size());
-        Assertions.assertEquals("Matheus Pereira", resultado.getFirst().getNome());
-        Assertions.assertEquals(26, resultado.getFirst().getIdade());
-        Assertions.assertEquals(lista, resultado.getFirst().getTimes());
+        Assertions.assertEquals("Festa", resultado.getFirst().getNome());
+        Assertions.assertEquals(10, resultado.getFirst().getConvidados());
     }
-
     @Test
     public void testSalvarJogadorNotSucessful() {
         Jogador aposta = new Jogador();
@@ -97,32 +70,80 @@ public class JogadorServiceTests {
 
 
         Assertions.assertThrows(RuntimeException.class, () -> {
-            jogadorService.addTime(aposta, 1);
+            jogadorService.addTime(aposta, "111");
         });
     }
+
     @Test
     public void testSalvarJogadorWhenStatusCodeIsNotSuccessful() {
         Jogador jogador = new Jogador();
-        jogador.setNome("Matheus Pereira");
-        jogador.setIdade(26);
+        jogador.setNome("Festa");
+        jogador.setConvidados(10);
+        jogador.setCpf("111");
         jogador.setId("1");
 
-        ArrayList<String> lista = new ArrayList<>();
-        lista.add("CRU");
-        jogador.setTimes(lista);
+
 
         RetornarTImeDTO retornarPartidaDTO = new RetornarTImeDTO();
         ResponseEntity<RetornarTImeDTO> partidaDto = new ResponseEntity<>(retornarPartidaDTO, HttpStatus.NOT_FOUND);
 
-        Mockito.when(timeService.getTime(1)).thenReturn(partidaDto);
+        Mockito.when(timeService.getTime("111")).thenReturn(partidaDto);
         Mockito.when(jogadorRepository.findById("1")).thenReturn(Optional.of(jogador));
 
         Assertions.assertThrows(TimeNaoEncontrandoException.class, () -> {
-            jogadorService.addTime(jogador,1);
+            jogadorService.addTime(jogador,"111");
+
+        });
+    }
+    @Test
+    public void testSalvarJogadorWhenMaxGuests() {
+        Jogador jogador = new Jogador();
+        jogador.setNome("Festa");
+        jogador.setConvidados(0);
+        jogador.setCpf("111");
+        jogador.setId("1");
+
+
+
+        RetornarTImeDTO retornarPartidaDTO = new RetornarTImeDTO();
+        ResponseEntity<RetornarTImeDTO> partidaDto = new ResponseEntity<>(retornarPartidaDTO, HttpStatus.OK);
+
+        Mockito.when(timeService.getTime("111")).thenReturn(partidaDto);
+        Mockito.when(jogadorRepository.findById("1")).thenReturn(Optional.of(jogador));
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            jogadorService.addTime(jogador,"111");
 
         });
     }
 
+    @Test
+    public void TestCadastrarJogador(){
+
+        Jogador jogador = new Jogador();
+        jogador.setNome("Festa");
+        jogador.setConvidados(10);
+        jogador.setCpf("123");
+
+
+        RetornarTImeDTO retornarPartidaDTO = new RetornarTImeDTO();
+        ResponseEntity<RetornarTImeDTO> partidaDto = new ResponseEntity<>(retornarPartidaDTO, HttpStatus.OK);
+
+        Mockito.when(timeService.getTime("123")).thenReturn(partidaDto);
+        Mockito.when(jogadorRepository.save(Mockito.any(Jogador.class))).thenReturn(jogador);
+
+
+
+        Jogador retorno = jogadorService.salvar(jogador);
+
+        // Verify the results
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(10, retorno.getConvidados());
+        Assertions.assertEquals("Festa", retorno.getNome());
+        Assertions.assertEquals("123", retorno.getCpf());
+
+
+    }
 
 
 

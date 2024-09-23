@@ -7,34 +7,17 @@ import lombok.Setter;
 
 public class RetornarTImeDTO {
 
-    private String identificador;
-    private String estadio;
-    private String estado;
+    private String cpf;
     private String nome;
 
     public String getIdentificador() {
-        return identificador;
+        return cpf;
     }
 
     public void setIdentificador(String identificador) {
-        this.identificador = identificador;
+        this.cpf = identificador;
     }
 
-    public String getEstadio() {
-        return estadio;
-    }
-
-    public void setEstadio(String estadio) {
-        this.estadio = estadio;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
     public String getNome() {
         return nome;

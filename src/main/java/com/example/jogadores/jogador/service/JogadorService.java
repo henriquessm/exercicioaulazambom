@@ -26,32 +26,57 @@ public class JogadorService {
 
     public Jogador salvar(Jogador jogador){
         //TODO: Checagens
-        return jogadorRepository.save(jogador);
+        ResponseEntity<RetornarTImeDTO> time = timeService.getTime(jogador.getCpf());
+        if(time.getStatusCode().is2xxSuccessful()){
+            RetornarTImeDTO timeDTO = time.getBody();
+            return jogadorRepository.save(jogador);
+
+        }
+        else {
+            throw new TimeNaoEncontrandoException("Usuário não encontrado");
+        }
+
     }
 
-    public List<Jogador> listar(){
-        return jogadorRepository.findAll();
+    public List<Jogador> listar(String nome){
+        List<Jogador> jogadores =  jogadorRepository.findAll();
+        if  (nome != null) {
+            ArrayList<Jogador> lista = new ArrayList<>();
+
+            for (Jogador partida  : jogadores) {
+                if (partida.getNome().equals(nome))  {
+                    lista.add(partida);
+                }
+            }
+            return lista;
+        }
+        List<Jogador> response = new ArrayList<>(jogadores);
+        return response;
     }
 
 
-    public Jogador addTime(Jogador jogador, Integer id){
+    public Jogador addTime(Jogador jogador, String id){
         //TODO: Checagens2
         Optional<Jogador> op = jogadorRepository.findById(jogador.getId());
         if (op.isEmpty()) {
-            throw new RuntimeException("Jogador não encontrado");
+            throw new RuntimeException("Evento não encontrado");
         }
         Jogador jogadorA = op.get();
         ResponseEntity<RetornarTImeDTO> time = timeService.getTime(id);
         if(time.getStatusCode().is2xxSuccessful()){
             RetornarTImeDTO timeDTO = time.getBody();
-            ArrayList<String> lista = jogadorA.getTimes();
-            lista.add(timeDTO.getIdentificador());
-            jogadorA.setTimes(lista);
+            Integer max = jogador.getConvidados();
+            if(max == 0){
+                throw new RuntimeException("Número máximo de convidados atingidos");
+
+            }
+            jogadorA.setConvidados(jogadorA.getConvidados()-1);
+
             return jogadorRepository.save(jogadorA);
 
         }
         else {
-            throw new TimeNaoEncontrandoException("Time não encontrado");
+            throw new TimeNaoEncontrandoException("Usuário não encontrado");
         }
 
 

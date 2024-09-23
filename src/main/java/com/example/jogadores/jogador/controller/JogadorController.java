@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/jogador")
+@RequestMapping("/evento")
 public class JogadorController {
 
 
     @Autowired
     private JogadorService jogadorService;
 
-    @GetMapping
-    public List<Jogador> listar() {
-        return jogadorService.listar();
+    @GetMapping()
+    public List<Jogador> listar(@RequestParam(required = false) String nome) {
+        return jogadorService.listar(nome);
     }
 
     @PostMapping
@@ -26,8 +26,8 @@ public class JogadorController {
         return jogadorService.salvar(aposta);
     }
 
-    @PostMapping("/{idTime}")
-    public Jogador salvarComTime(@RequestBody Jogador aposta, @PathVariable Integer idTime) {
-        return jogadorService.addTime(aposta, idTime);
+    @PostMapping("/{cpf}")
+    public Jogador salvarComTime(@RequestBody Jogador aposta, @PathVariable String cpf) {
+        return jogadorService.addTime(aposta, cpf);
     }
 }

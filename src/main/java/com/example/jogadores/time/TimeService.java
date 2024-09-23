@@ -8,10 +8,10 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class TimeService {
 
-    public ResponseEntity<RetornarTImeDTO> getTime(Integer idTime) {
+    public ResponseEntity<RetornarTImeDTO> getTime(String cpf) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(
-                "http://54.237.220.2:8082/time/" + idTime,
+                "http://184.72.80.215:8080/usuario/" + cpf,
                 RetornarTImeDTO.class);
     }
 }

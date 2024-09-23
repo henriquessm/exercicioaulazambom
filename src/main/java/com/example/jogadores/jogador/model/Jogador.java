@@ -16,10 +16,9 @@ public class Jogador {
     @Id
     private String id;
     private String nome;
-    private Integer idade;
+    private Integer convidados;
 
-    private ArrayList<String> times;
-
+    private String cpf;
 
     public String getId() {
         return id;
@@ -37,20 +36,27 @@ public class Jogador {
         this.nome = nome;
     }
 
-    public Integer getIdade() {
-        return idade;
+    public Integer getConvidados() {
+        return convidados;
     }
 
-    public void setIdade(Integer idade) {
-        this.idade = idade;
+    public void setConvidados(Integer convidados) {
+        this.convidados = convidados;
     }
 
-    public ArrayList<String> getTimes() {
-        return times;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setTimes(ArrayList<String> times) {
-        this.times = times;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Jogador(String id, String nome, Integer convidados, String cpf) {
+        this.id = id;
+        this.nome = nome;
+        this.convidados = convidados;
+        this.cpf = cpf;
     }
 
     public Jogador(){
